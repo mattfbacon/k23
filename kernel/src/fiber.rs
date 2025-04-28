@@ -141,7 +141,7 @@ impl<Input, Yield, Return> Fiber<Input, Yield, Return> {
                 let suspend = &*(ptr::from_mut(parent_link).cast::<Suspend<Input, Yield>>());
 
                 // Read the function from the stack.
-                debug_assert_eq!(func as usize % align_of::<F>(), 0);
+                debug_assert!(func.is_aligned());
                 let f = func.read();
 
                 let input: Input = decode_val(input);
